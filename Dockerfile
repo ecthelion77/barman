@@ -22,16 +22,18 @@ RUN apt-get -y install cron
 ADD ./crontab /etc/cron.d/barman
 RUN rm -f /etc/cron.daily/*
 
-RUN groupadd -r postgres --gid=999 && useradd -r -g postgres -d /home/postgres --uid=999 postgres
-
-RUN chown -R postgres:postgres /home/postgres
+RUN groupadd -r postgres --gid=999 \ 
+  && useradd -r -g postgres -d /home/postgres --uid=999 postgres \
+  && mkdir /home/postgres \
+  && chown -R postgres:postgres /home/postgres
 
 COPY ./bin /usr/local/bin/barman_docker
-RUN chmod +x /usr/local/bin/barman_docker/* && ls /usr/local/bin/barman_docker
+RUN chmod +x /usr/local/bin/barman_docker/* \
+  && ls /usr/local/bin/barman_docker
 
 COPY ./metrics /go
 RUN cd /go && go build /go/main.go
 
-VOLUME $BACKUP_DIR
+VOLUME /var/backups
 
 CMD /usr/local/bin/barman_docker/entrypoint.sh
