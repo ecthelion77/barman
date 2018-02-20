@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "Generating cron schedules"
 echo "${BARMAN_CRON_SCHEDULE} root barman cron" > /etc/crontab
