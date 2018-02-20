@@ -19,17 +19,17 @@ RUN  wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | apt-key a
      apt-get install -y libffi-dev libssl-dev postgresql-client-10=10.2\* barman=2.3-2.pgdg80+1 openssh-server
 
 RUN apt-get -y install cron
-ADD barman/crontab /etc/cron.d/barman
+ADD ./crontab /etc/cron.d/barman
 RUN rm -f /etc/cron.daily/*
 
 RUN groupadd -r postgres --gid=999 && useradd -r -g postgres -d /home/postgres --uid=999 postgres
 
 RUN chown -R postgres:postgres /home/postgres
 
-COPY ./barman/bin /usr/local/bin/barman_docker
+COPY ./bin /usr/local/bin/barman_docker
 RUN chmod +x /usr/local/bin/barman_docker/* && ls /usr/local/bin/barman_docker
 
-COPY ./barman/metrics /go
+COPY ./metrics /go
 RUN cd /go && go build /go/main.go
 
 VOLUME $BACKUP_DIR
