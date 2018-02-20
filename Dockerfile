@@ -36,4 +36,4 @@ RUN cd /go && go build /go/main.go
 
 VOLUME /var/backups
 
-CMD /usr/local/bin/barman_docker/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/barman_docker/entrypoint.sh"]
