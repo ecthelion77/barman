@@ -10,6 +10,9 @@ chmod 0644 /etc/cron.d/barman
 echo '>>> STARTING METRICS SERVER'
 /go/main &
 
+echo '>>> STARTING SSH SERVER'
+/etc/init.d/ssh start
+
 echo '>>> STARTING CRON'
 env >> /etc/environment
 cron -f
