@@ -25,7 +25,9 @@ RUN rm -f /etc/cron.daily/*
 RUN groupadd -r postgres --gid=999 \ 
   && useradd -r -g postgres -d /home/postgres --uid=999 postgres \
   && mkdir /home/postgres \
-  && chown -R postgres:postgres /home/postgres
+  && chown -R postgres:postgres /home/postgres \
+  && mkdir /var/log/barman \
+  && chown -R postgres:postgres /var/log/barman
 
 COPY ./bin /usr/local/bin/barman_docker
 RUN chmod +x /usr/local/bin/barman_docker/* \
